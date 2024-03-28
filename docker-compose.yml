@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  lambda:
+    image: public.ecr.aws/lambda/nodejs:latest
+    volumes:
+      - ./app:/var/task:ro
+    command: index.handler
+    ports:
+      - "9000:8080"

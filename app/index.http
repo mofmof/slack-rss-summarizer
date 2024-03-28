@@ -1,0 +1,12 @@
+@host = http://localhost:9000
+@contentType = application/json
+
+POST {{host}}/2015-03-31/functions/function/invocations
+Content-Type: {{contentType}}
+
+{
+  "payload": {
+    "key1": "value1",
+    "key2": "value2"
+  }
+}
