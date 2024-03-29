@@ -16,22 +16,24 @@ export async function handler(event, context) {
     };
   }
 
-  //// OpenAIのAPIを使って要約をする場合にコメントを外す
-  // const urlPattern = /https?:\/\/[^\s\/$.?#].[^\s]*?(?=\||\s|$)/g; // URLは<>で囲まれていると仮定
-  // const urlMatch = event.event.text.match(urlPattern);
-  // const url = urlMatch ? urlMatch[0] : null;
-  // const contents = await getContents(url);
-  // const summary = await summelize(contents)
-  const summary = 'summary sample'
+  // RSSアプリの投稿の場合
+  if (event.icons && event.icons.image_36.includes('img/services/rss_36.png')) {
+    //// OpenAIのAPIを使って要約をする場合にコメントを外す
+    // const urlPattern = /https?:\/\/[^\s\/$.?#].[^\s]*?(?=\||\s|$)/g; // URLは<>で囲まれていると仮定
+    // const urlMatch = event.event.text.match(urlPattern);
+    // const url = urlMatch ? urlMatch[0] : null;
+    // const contents = await getContents(url);
+    // const summary = await summelize(contents)
+    const summary = 'summary sample'
 
-  // notionのDBに追加
-  // const response = await postNotion(url, summary);
-  // console.log({ response: response.status });
+    await postSlack(summary);
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(event),
-  };
+    // notionのDBに追加
+    // const response = await postNotion(url, summary);
+    // console.log({ response: response.status });
+  }
+
+  return { statusCode: 200, body: {} };
 }
 
 async function getContents(url) {
@@ -91,4 +93,14 @@ async function postNotion(url, summary) {
       },
     }
   );
+}
+
+async function postSlack(text) {
+  await axios.post(process.env.SLACK_WEBHOOK_URL, { text })
+  .then((response) => {
+    console.log('Message posted successfully:', response.data);
+  })
+  .catch((error) => {
+    console.error('Error posting message:', error);
+  });
 }
