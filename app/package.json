@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "langchain": "latest",
-    "cheerio": "latest"
+    "cheerio": "latest",
+    "@langchain/openai": "latest"
   }
 }
