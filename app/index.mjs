@@ -4,8 +4,6 @@ import { OpenAI } from "@langchain/openai";
 
 // ハンドラ関数の定義
 export async function handler(event, context) {
-  console.log(JSON.stringify(event))
-
   // SlackのURL検証リクエストの場合
   if (event.type === "url_verification") {
     return {
@@ -17,7 +15,7 @@ export async function handler(event, context) {
   }
 
   // RSSアプリの投稿の場合
-  if (event.icons && event.icons.image_36.includes('img/services/rss_36.png')) {
+  if (event.event.subtype === "bot_message" && event.event.icons && event.event.icons.image_36.includes('img/services/rss_36.png')) {
     //// OpenAIのAPIを使って要約をする場合にコメントを外す
     // const urlPattern = /https?:\/\/[^\s\/$.?#].[^\s]*?(?=\||\s|$)/g; // URLは<>で囲まれていると仮定
     // const urlMatch = event.event.text.match(urlPattern);
