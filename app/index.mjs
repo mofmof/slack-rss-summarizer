@@ -1,7 +1,8 @@
+import { CheerioWebBaseLoader } from "langchain/document_loaders/web/cheerio";
 // index.js
 
 // ハンドラ関数の定義
-exports.handler = async (event, context) => {
+export async function handler(event, context)  {
   // console.log("==================================")
   // console.log(JSON.stringify(event))
   // console.log("==================================")
@@ -20,8 +21,12 @@ exports.handler = async (event, context) => {
   const urlMatch = event.event.text.match(urlPattern);
   const url = urlMatch ? urlMatch[0] : null
 
-  console.log(url)
 
+  const loader = new CheerioWebBaseLoader(
+      url
+  );
+  const docs = await loader.load();
+  console.log(docs)
   return {
     statusCode: 200,
     body: JSON.stringify({

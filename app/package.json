@@ -2,11 +2,14 @@
   "name": "lambda-function",
   "version": "1.0.0",
   "description": "A sample Lambda function",
-  "main": "index.js",
+  "main": "index.mjs",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.mjs"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "langchain": "latest",
+    "cheerio": "latest"
   }
 }
